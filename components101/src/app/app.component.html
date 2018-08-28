@@ -17,7 +17,30 @@
     <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
   </li>
 
+  <favorite [isFavorite]="post.isFavorite" (change)="onFavoriteChange()"></favorite>
+
   <app-my-new-component></app-my-new-component>
+
+  <h1>Hey {{ myObject.location }}</h1>
+  
+  <ul>
+    <li *ngFor = "let arr of myArr"> {{ arr }} </li>  
+  </ul>
+  
+  <ol>
+    <li *ngIf="myArr"> Yeah I exist </li>
+    <li *ngIf="!myArr"> Yeah I don't exist </li>
+    <li *ngIf="myArr == 'something'"> It does not equal so won't show </li>
+    <li *ngIf="!myArr; else otherTmpl"> It does not equal so won't show </li>
+
+    <ng-template #otherTmpl> No, I do. </ng-template>
+
+    <div *ngIf="myArr; then templ1 else templ2">Will not get shown here so don't insert anything </div>
+    
+    <ng-template #templ1> <p>Template 1</p> </ng-template>
+    <ng-template #templ2> <p>Template 2</p> </ng-template>
+
+  </ol>
 
 </ul>
 

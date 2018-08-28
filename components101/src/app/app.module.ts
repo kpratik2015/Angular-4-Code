@@ -1,3 +1,4 @@
+import { FavoriteComponent } from './favorite.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -7,7 +8,8 @@ import { MyNewComponentComponent } from './my-new-component/my-new-component.com
 @NgModule({
   declarations: [
     AppComponent,
-    MyNewComponentComponent
+    MyNewComponentComponent,
+    FavoriteComponent
   ],
   imports: [
     BrowserModule
