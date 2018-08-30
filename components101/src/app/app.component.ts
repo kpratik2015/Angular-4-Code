@@ -1,4 +1,14 @@
+import { FavoriteChangedEventArgs } from './favorite.component';
 import { Component } from '@angular/core';
+
+
+/*
+If we are building a reusable component,
+you wanna declare this interface in your implementation and export it from your module.
+*/
+// interface FavoriteChangedEventArgs {
+//   newValue: boolean
+// }
 
 @Component({
   selector: 'app-root',
@@ -18,7 +28,10 @@ export class AppComponent {
   }
   myArr = ['Hello','World','Wassup','?']
 
-  onFavoriteChange() {
-    console.log("Favorite changed");
+
+  // to add intellisense and typecheck we can do: onFavoriteChange(eventArgs: { newValue boolean })
+  // also achievable through interface
+  onFavoriteChange(eventArgs: FavoriteChangedEventArgs) {
+    console.log("Favorite changed: ", eventArgs);
   }
 }
