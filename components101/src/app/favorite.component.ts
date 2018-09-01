@@ -3,7 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation } fro
 @Component({
   selector: 'favorite',
   templateUrl: './favorite.component.html',
-  styleUrls: ['./favorite.component.css'],
+  styleUrls: ['./favorite.component.css']
   /*
   with emulated angular emulates shadow dom since most browsers don't support shadow dom
   with native a shadow-root will pop up in html code making above style only applied to the template

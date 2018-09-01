@@ -19,7 +19,13 @@
 
   <favorite [isFavorite]="post.isFavorite" (change)="onFavoriteChange($event)"></favorite>
 
-  <app-my-new-component></app-my-new-component>
+  <app-my-new-component>
+    <div class="heading">Heading</div>
+    <div class="body">
+      <h2>Body</h2>
+      <p>Some content here...</p>
+    </div>
+  </app-my-new-component>
 
   <h1>Hey {{ myObject.location }}</h1>
   
