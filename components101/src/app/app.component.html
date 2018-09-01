@@ -61,3 +61,10 @@
   No courses yet  
 </ng-template>
 
+<div [hidden]="courses.length == 0">
+  No courses yet. 
+</div>
+
+<div [hidden]="courses.length > 0">
+  Hidden property is only good for small elements against ngIf. This appears in html.
+</div>
