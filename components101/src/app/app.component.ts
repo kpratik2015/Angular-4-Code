@@ -28,7 +28,7 @@ export class AppComponent {
   }
   myArr = ['Hello','World','Wassup','?']
 
-
+  courses = []
   // to add intellisense and typecheck we can do: onFavoriteChange(eventArgs: { newValue boolean })
   // also achievable through interface
   onFavoriteChange(eventArgs: FavoriteChangedEventArgs) {
