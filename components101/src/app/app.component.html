@@ -16,7 +16,7 @@
   <li>
     <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
   </li>
-
+</ul>
   <favorite [isFavorite]="post.isFavorite" (change)="onFavoriteChange($event)"></favorite>
 
   <app-my-new-component>
@@ -49,7 +49,7 @@
 
   </ol>
 
-</ul>
+<!--ngIf START-->
 
 <div *ngIf="courses.length > 0; then coursesList else noCourses">
   List of courses
@@ -61,6 +61,9 @@
   No courses yet  
 </ng-template>
 
+<!--ngIf END-->
+
+<!--Hidden property START-->
 <div [hidden]="courses.length == 0">
   No courses yet. 
 </div>
@@ -68,3 +71,20 @@
 <div [hidden]="courses.length > 0">
   Hidden property is only good for small elements against ngIf. This appears in html.
 </div>
+<!--Hidden property END-->
+
+<!--ngSwitchCase START-->
+
+<ul class="nav nav-pills">
+  <!-- ZEN CODING to quickly generate html markup 
+    (li>a)*2 -->
+    <li [class.active]="viewMode == 'map'"><a (click)="viewMode = 'map'">Map View</a></li>
+    <li [class.active]="viewMode == 'list'"><a (click)="viewMode = 'list'">List View</a></li>
+</ul>
+<div [ngSwitch]="viewMode">
+  <div *ngSwitchCase="'map'" >Map View Content</div>
+  <div *ngSwitchCase="'list'">List View Content</div>
+  <div *ngSwitchDefault>Otherwise</div>
+</div>
+
+<!--ngSwitchCase END-->

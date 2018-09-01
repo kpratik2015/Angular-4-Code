@@ -34,4 +34,9 @@ export class AppComponent {
   onFavoriteChange(eventArgs: FavoriteChangedEventArgs) {
     console.log("Favorite changed: ", eventArgs);
   }
+
+
+  // ngSwitchCase:
+
+  viewMode = 'somethingElse';
 }
