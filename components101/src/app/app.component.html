@@ -88,3 +88,13 @@
 </div>
 
 <!--ngSwitchCase END-->
+
+<!--ngFor START-->
+<ul>
+  <!--Note that ngFor has some exported values like index that can be helpful in a table
+  List: https://angular.io/api/common/NgForOf#local-variables-->
+  <li *ngFor="let course of course_list; index as i, even as isEven">
+    {{ i }} - {{ course.name }} <span *ngIf="isEven">(EVEN)</span>
+  </li>
+</ul>
+<!--ngFor END-->

@@ -26,17 +26,25 @@ export class AppComponent {
     age: 22,
     location: 'Pune'
   }
-  myArr = ['Hello','World','Wassup','?']
+  myArr = ['Hello','World','Wassup','?'];
 
-  courses = []
+  
   // to add intellisense and typecheck we can do: onFavoriteChange(eventArgs: { newValue boolean })
   // also achievable through interface
   onFavoriteChange(eventArgs: FavoriteChangedEventArgs) {
     console.log("Favorite changed: ", eventArgs);
   }
 
+  //ngIf
+  courses = [];
 
   // ngSwitchCase:
-
   viewMode = 'somethingElse';
+
+  // ngFor:
+  course_list = [
+    { id: 1, name: 'course1' },
+    { id: 2, name: 'course2' },
+    { id: 3, name: 'course3' }
+  ];
 }
