@@ -98,3 +98,15 @@
   </li>
 </ul>
 <!--ngFor END-->
+
+<!-- ngFor change detection -->
+
+<button (click)="onAdd()" >Add</button>
+<ul>
+  <li *ngFor="let arr of myArr">
+    {{ arr }}
+    <button (click)="onRemove(arr)">Remove</button>
+  </li>
+</ul>
+
+<!-- ngFor change detection -->

@@ -47,4 +47,13 @@ export class AppComponent {
     { id: 2, name: 'course2' },
     { id: 3, name: 'course3' }
   ];
+
+  onAdd() {
+    this.myArr.push('additional');
+  }
+  
+  onRemove(arr) {
+    let index = this.myArr.indexOf(arr);
+    this.myArr.splice(index, 1);
+  }
 }
