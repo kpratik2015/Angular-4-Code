@@ -16,6 +16,9 @@ you wanna declare this interface in your implementation and export it from your 
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+  canSave = true;
+
   post = {
     title:"Title",
     isFavorite: true
