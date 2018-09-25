@@ -110,3 +110,18 @@
 </ul>
 
 <!-- ngFor change detection -->
+
+<!-- ngFor and trackBY START -->
+<!-- 
+  By default angular tracks object by reference of them in memory
+  So when we reload, the memory location is gonna change and dom tree will be reloaded
+  even though the contents of the object has not changed.
+  Hence we want to change how angular tracks changes in object using trackBy.
+ -->
+ <button (click)="loadCourses()" >Load Courses</button>
+ <ul>
+   <li *ngFor="let course of course_list; trackBy: trackCourse">
+     {{ course.name }}
+   </li>
+ </ul>
+ <!-- ngFor and trackBY END -->

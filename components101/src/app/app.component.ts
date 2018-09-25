@@ -42,11 +42,7 @@ export class AppComponent {
   viewMode = 'somethingElse';
 
   // ngFor:
-  course_list = [
-    { id: 1, name: 'course1' },
-    { id: 2, name: 'course2' },
-    { id: 3, name: 'course3' }
-  ];
+  course_list;
 
   onAdd() {
     this.myArr.push('additional');
@@ -55,5 +51,17 @@ export class AppComponent {
   onRemove(arr) {
     let index = this.myArr.indexOf(arr);
     this.myArr.splice(index, 1);
+  }
+
+  loadCourses() {
+    this.course_list = [
+      { id: 1, name: 'course1' },
+      { id: 2, name: 'course2' },
+      { id: 3, name: 'course3' }
+    ];
+  }
+
+  trackCourse(index, course) {
+    return course ? course.id : undefined;
   }
 }
