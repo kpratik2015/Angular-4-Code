@@ -26,8 +26,20 @@
 <form>
   <div class="form-group">
     <label for="firstName">First Name</label>
-    <input required ngModel name="firstName" #firstName="ngModel" (change)="log(firstName)" id="firstName" type="text" class="form-control">
-    <div class="alert alert-danger" *ngIf="firstName.touched && !firstName.valid" >First Name is required</div>
+    <input 
+    required  
+    minlength="3" 
+    maxlength="10" 
+    pattern="apple" 
+    ngModel 
+    name="firstName" #firstName="ngModel" (change)="log(firstName)" id="firstName" type="text" class="form-control"
+    >
+    <div class="alert alert-danger" *ngIf="firstName.touched && !firstName.valid" >
+      <div *ngIf="firstName.errors.required">First Name is required</div>
+      <div *ngIf="firstName.errors.minlength">First Name should not be less than {{ firstName.errors.minlength.requiredLength }} characters</div>
+      <div *ngIf="firstName.errors.maxlength">First Name should not be more than 10 characters</div>
+      <div *ngIf="firstName.errors.pattern">First Name should be apple only as per pattern</div>
+    </div>
   </div>
   
   <!-- div.form-group>label[for='comemnt']+textarea[id='comment'].form-control -->
