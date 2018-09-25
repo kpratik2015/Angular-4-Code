@@ -8,7 +8,7 @@ import { Directive, HostListener, ElementRef, Input } from '@angular/core';
 })
 export class InputFormatDirective {
 
-  @Input('format') format;
+  @Input('appInputFormat') format;
 
   // ElementRef is a service defined in agular that gives us 
   // access to a dom element
