@@ -67,4 +67,17 @@ export class AppComponent {
   trackCourse(index, course) {
     return course ? course.id : undefined;
   }
+
+  // SAFE TRAVERSAL OPERATOR:
+
+  task = {
+    title: 'Review applications',
+    assignee: {
+      name: 'John Smith'
+    }
+  }
+
+  
+
 }
+
