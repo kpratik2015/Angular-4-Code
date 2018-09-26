@@ -70,7 +70,7 @@
     <option value=""></option>
     <option 
     *ngFor="let method of contactMethods" 
-    [value]="method.id"
+    [ngValue]="method"
     >{{ method.name }}</option>
   </select>
 </div>
