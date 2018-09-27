@@ -18,6 +18,17 @@ export class SignupFormComponent {
   Validators has static members like required, etc.
   */
 
+  /*
+  AsyncValidatorFn is interface. It takes AbstractControl as param. 
+  Return type is Promise or Observable
+
+  When you read docs,
+  Promise<ValidationErrors|null> imply that function returns either:
+  1. ValidationErrors or
+  2. null
+
+  */
+
   form = new FormGroup({
     // 'user-name' : new FormControl(),
     username: new FormControl('',[
@@ -25,7 +36,8 @@ export class SignupFormComponent {
       Validators.minLength(3),
       Validators.maxLength(10),
       UsernameValidators.cannotContainSpace
-    ]),
+    ],
+    UsernameValidators.shouldBeUnique),
     password: new FormControl('',Validators.required)
   });
 
