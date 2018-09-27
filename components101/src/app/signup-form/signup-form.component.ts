@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'signup-form',
@@ -13,11 +13,19 @@ export class SignupFormComponent {
 
   ERROR: Can't bind to formGroup since it isn't a known property of 'form'
   SOLUTION: ReactiveFormsModule in app.module.ts
+
+  Validators has static members like required, etc.
   */
 
   form = new FormGroup({
     // 'user-name' : new FormControl(),
-    username: new FormControl(),
-    password: new FormControl()
+    username: new FormControl('',Validators.required),
+    password: new FormControl('',Validators.required)
   });
+
+  get username() {
+    return this.form.get('username');
+  }
+
+  
 }
