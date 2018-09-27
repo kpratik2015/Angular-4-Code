@@ -11,6 +11,7 @@
             id="username" 
             type="text" 
             class="form-control">
+            <div *ngIf="username.pending">Checking for uniqueness...</div> <!--pending returns true if at least one async operation is in progress-->
             <div 
             *ngIf="username.touched && username.invalid" 
             class="alert alert-danger"
