@@ -53,7 +53,7 @@ export class SignupFormComponent {
       invalidLogin: true
     });
     }
-  }
+  
 
   get username() {
     return this.form.get('username');
