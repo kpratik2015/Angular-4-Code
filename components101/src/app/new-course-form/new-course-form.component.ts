@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormArray, FormControl } from '@angular/forms';
+import { FormGroup, FormArray, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'new-course-form',
@@ -9,9 +9,28 @@ import { FormGroup, FormArray, FormControl } from '@angular/forms';
 })
 
 export class NewCourseFormComponent {
-  form = new FormGroup({
-    topics : new FormArray([])
-  });
+  form;
+  /* Messy way */
+  // form = new FormGroup({
+  //   name: new FormControl('', Validators.required),
+  //   contact: new FormGroup({
+  //     email: new FormControl(),
+  //     phone: new FormControl()
+  //   }),
+  //   topics : new FormArray([])
+  // });
+
+  /* Cleaner way using formbuilder */
+  constructor(fb: FormBuilder) {
+    this.form = fb.group({
+      name: ['', Validators.required], // the values we pass in array will be used as arguments to formcontrol object
+      contact: fb.group({
+        email: [],
+        phone: []
+      }),
+      topics: fb.array([])
+    });
+  }
 
   addTopic(topic : HTMLInputElement) {
     // // AbstractControl is base class for FormArray as well
