@@ -13,4 +13,15 @@ export class UsernameValidators {
             // } }
         return null
     }
+
+    static shouldBeUnique(control: AbstractControl) : ValidationErrors | null {
+        // simulate
+        setTimeout(() => {
+            if (control.value === 'pratik')
+                return { shouldBeUnique : true };
+            return null;
+        }, 2000) // arrow function syntax with no params. This is async. 
+        
+        return null; // this is wrong as it will always return null. Just for solving compilation erorr it's not good.
+    }
 }
