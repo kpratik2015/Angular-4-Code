@@ -11,12 +11,7 @@ export class PostsComponentComponent implements OnInit {
   posts: any[];
   private url = 'http://jsonplaceholder.typicode.com/posts'; // we want this visible only in this class
   constructor(private http: Http) { // decorate with private keyword so it is available to other functions
-    // We use observables to work with asynchronous i.e. non-blocking operations
-    http.get(this.url) // it returns observable<Response>
-        .subscribe(response => {
-          // console.log(response.json());
-          this.posts = response.json();
-        }); // we are subscribing to observable that means when the result is ready we'll be notified
+    // LESSON: do not call http services in constructor. Use ngOnInit
   } // we use this http class to get data from backend
 
   createPost(inputTitle : HTMLInputElement) {
@@ -49,7 +44,29 @@ export class PostsComponentComponent implements OnInit {
     });
   }
 
+  /*
+  components have some some lifecycle hooks like ngOnInit. 
+  Angular will call this speical method at specific times.
+  For instance, when angualar:
+  - creates a component
+  - renders it
+  - creates and renders its children
+  - destroys a component
+
+  Lifecycle Hooks:
+  - OnInit
+  - OnChanges
+  - DoCheck
+  - AfterContentInit
+  - etc.
+  */
   ngOnInit() {
+    // We use observables to work with asynchronous i.e. non-blocking operations
+    this.http.get(this.url) // it returns observable<Response>
+    .subscribe(response => {
+      // console.log(response.json());
+      this.posts = response.json();
+    }); // we are subscribing to observable that means when the result is ready we'll be notified
   }
 
 }
