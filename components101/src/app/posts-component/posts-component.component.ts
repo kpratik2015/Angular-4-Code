@@ -20,7 +20,7 @@ export class PostsComponentComponent implements OnInit {
   createPost(inputTitle : HTMLInputElement) {
     let post = { title: inputTitle.value}
     inputTitle.value = '';
-    this.service.createPost(post)
+    this.service.create(post)
       .subscribe(
         response => {
           post['id'] = response.json().id; // post.id gives compilation error. For this we can also do let post: any
@@ -39,7 +39,7 @@ export class PostsComponentComponent implements OnInit {
     // we use the patch method to update only few properties in an object.
     // patch is not widely supported. patch can give slight performance benefit
     // NOTE: when using patch or put method we need to reference a specific post
-    this.service.updatePost(post)
+    this.service.update(post)
     .subscribe(
       response => {
         console.log(response.json());
@@ -49,7 +49,7 @@ export class PostsComponentComponent implements OnInit {
 
   deletePost(post) {
     // this.service.deletePost(455) // for seeing error.
-    this.service.deletePost(post.id)
+    this.service.delete(post.id)
     .subscribe(
       response => {
         let index = this.posts.indexOf(post);
@@ -81,7 +81,7 @@ export class PostsComponentComponent implements OnInit {
   */
   ngOnInit() {
     // We use observables to work with asynchronous i.e. non-blocking operations
-    this.service.getPosts() // this component is now telling the service that hey I want posts. Get the posts somehow. Service will figure it out.
+    this.service.getAll() // this component is now telling the service that hey I want posts. Get the posts somehow. Service will figure it out.
     .subscribe(
       response => {
         // console.log(response.json());
