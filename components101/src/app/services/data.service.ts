@@ -34,6 +34,10 @@ export class DataService {
   }
 
   create(resource) {
+
+    // throw is a factory method that we use to create new observable object.
+    // return Observable.throw(new AppError()); // for testing error on server
+
     return this.http.post(this.url, JSON.stringify(resource))
       .map(response => response.json())
       .catch(this.handleError);  // this method also returns observable
