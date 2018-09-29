@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-github-profile',
@@ -11,9 +11,17 @@ import { ActivatedRoute } from '@angular/router';
 // ActivatedRoute
 export class GithubProfileComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute
+    ) { }
 
 
+  submit() {
+    this.router.navigate(['/followers'], {
+      queryParams: {page: 1, order: 'newest'} // this makes the queryParams go in other direction
+    })
+  }
   /*
   Why is paramMap observable?
   In Angular, it does not makes sense to destroy one component when navigating
