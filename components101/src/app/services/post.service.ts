@@ -38,31 +38,40 @@ export class PostService {
   constructor(private http: Http) { }
 
   getPosts() {
-    return this.http.get(this.url); // it returns observable<Response>
+    return this.http.get(this.url)
+    .catch(this.handleError); // it returns observable<Response>
   }
 
   createPost(post) {
     return this.http.post(this.url, JSON.stringify(post))
-      .catch((error: Response) => {
-        if (error.status === 400)
-          return Observable.throw(new BadInput(error.json()))
-        return Observable.throw(new AppError(error.json()))
-      }); // this method also returns observable
+      .catch(this.handleError); // this method also returns observable
   }
   
   updatePost(post) {
-    return this.http.patch(this.url+'/'+post.id, JSON.stringify({ isRead: true }));
+    return this.http
+    .patch(this.url+'/'+post.id, JSON.stringify({ isRead: true }))
+    .catch(this.handleError);
   }
 
   deletePost(id) {
     return this.http.delete(this.url+'/'+id)
-      .catch((error:Response) => {
-        if (error.status === 404){
-          // console.log(error.status);
-          return Observable.throw(new NotFoundError()); // static method
-        }
-        return Observable.throw(new AppError(error));
-      });
+      .catch(this.handleError); // NOTE: it's not being called. We're simple passing a reference
   }
 
+  // it's private bcoz we don't want the consumer of this service to know
+  // about this method. That is, the component should only work with
+  // CRUD methods above.
+  private handleError(error: Response) {
+
+    if (error.status === 400)
+      return Observable.throw(new BadInput(error.json()))
+    if (error.status === 404){
+      // console.log(error.status);
+      return Observable.throw(new NotFoundError()); // static method
+    }
+    return Observable.throw(new AppError(error));
+  }
+
+
+  // WE CAN QUICKLY JUMP TO FUNCTIONS WITH SHIFT + CTRL + O
 }
