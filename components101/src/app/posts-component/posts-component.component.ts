@@ -76,6 +76,7 @@ export class PostsComponentComponent implements OnInit {
       // this.http.put(this.url, JSON.stringify(post)) // e.g. of put.
   }
   // OPTIMISTIC:
+  // OBSERVABLE
   deletePost(post) {
     let index = this.posts.indexOf(post);
     this.posts.splice(index, 1);
@@ -96,6 +97,12 @@ export class PostsComponentComponent implements OnInit {
       });
   }
 
+  // PROMISE
+  // deletePost(post) {
+  //   // promises have then and catch
+  //   this.service.delete(post.id); 
+  // }
+
   /*
   components have some some lifecycle hooks like ngOnInit. 
   Angular will call this speical method at specific times.
@@ -111,6 +118,14 @@ export class PostsComponentComponent implements OnInit {
   - DoCheck
   - AfterContentInit
   - etc.
+
+  NOTE:
+  if we don't subscribe and simply call this.service.delete(post.id);
+  for e.g. then the request will not reach our backend. 
+  Only on calling subscribe will the backend get the request (this is visible in network tab).
+
+  OBSERVABLES are lazy. That is, nothing happens until you subscribe to them.
+  PROMISES are eager. As soon as you create a promise, the code is executed.
   */
   ngOnInit() {
     // We use observables to work with asynchronous i.e. non-blocking operations

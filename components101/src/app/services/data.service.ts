@@ -15,6 +15,10 @@ import 'rxjs/add/observable/throw';
 // import { filter, map, catchError } from 'rxjs/operators';
 
 import 'rxjs/add/operator/map';
+
+// import 'rxjs/add/operator/toPromise'; // converts observable to promise
+
+
 @Injectable({
   providedIn: 'root' 
 })
@@ -50,9 +54,17 @@ export class DataService {
     .catch(this.handleError);
   }
 
+  /*
+  We can always convert observable to promise but this isn't recommended
+  unless there is some strong reason.
+  NOTE: promise don't have subscribe
+  */
+
   delete(id) {
     return this.http.delete(this.url+'/'+id)
       .map(response => response.json())
+      // .toPromise() // converts observable to promise
+      // .retry(3) // if call to observable fails, it will retry 3 times. retry is part of reactive programming where we get more such powerful libraries
       .catch(this.handleError);  // NOTE: it's not being called. We're simple passing a reference
   }
 
