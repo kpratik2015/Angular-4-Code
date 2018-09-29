@@ -7,7 +7,7 @@
   <div class="media-body">
     <h4 class="media-heading">
       <!--Below is IMPORTANT. when we want to have multiple route parameters. So use property binding.-->
-      <a [routerLink]="['/followers',follower.id]">{{ follower.login }}</a>
+      <a [routerLink]="['/followers',follower.id, follower.login]">{{ follower.login }}</a>
     </h4>
     <a href="follower.html_url">{{ follower.html_url }}</a>
   </div>
