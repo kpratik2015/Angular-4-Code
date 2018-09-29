@@ -62,7 +62,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     HttpModule,
     RouterModule.forRoot([ // note: none of our routes start with a leading slash
       { path: '', component: HomeComponent },
-      { path: 'followers/:username', component: GithubProfileComponent }, // more specific routes at top
+      { path: 'followers/:id', component: GithubProfileComponent }, // more specific routes at top
       { path: 'followers', component: GithubFollowersComponent },
       { path: 'posts', component: PostsComponent },
       { path: '**', component: NotFoundComponent }, //** is wildcard. This is like any route. Should be at the end
