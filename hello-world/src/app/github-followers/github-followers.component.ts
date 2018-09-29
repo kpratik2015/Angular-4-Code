@@ -4,6 +4,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest'; // static method on Observable class.
 
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
+
 @Component({
   selector: 'github-followers',
   templateUrl: './github-followers.component.html',
@@ -26,17 +29,18 @@ export class GithubFollowersComponent implements OnInit {
       this.route.paramMap,
       this.route.queryParamMap
     ])
+      .switchMap(combined => {
+        let id = combined[0].get('id');
+        let page = combined[1].get('page');
+        return this.service.getAll();
+      }) // what we return from this map method will be an input to our subscribe method
+    
+      // now we don't have subscribe inside another subscribe.
+      // we use map operator to transform the objects in our observables
+    obs.subscribe( followers => { this.followers = followers});
 
-    obs.subscribe( combined => {  // here combine is an array with two observables
-      let id = combined[0].get('id');
-      let page = combined[1].get('page');
-      // this.service.getAll({ id: id, page: page })
-      this.service.getAll()
-      .subscribe(followers => this.followers = followers);
-      // now we have a subscribe in another subscribe which is ugly
-      // gotta change that.
-    });
 
+    // we want array of followers and not array of observables. So we use switchMap
    
   }
 }
