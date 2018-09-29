@@ -53,13 +53,15 @@ export class PostsComponentComponent implements OnInit {
   }
 
   deletePost(post) {
-    this.service.deletePost(post.id)
+    this.service.deletePost(455) // for seeing error.
+    // this.service.deletePost(post.id)
     .subscribe(
       response => {
         let index = this.posts.indexOf(post);
         this.posts.splice(index, 1);
       },
       (error: AppError) => { // whenever in arrow notation you want to use type notation then put round brackets.
+        console.log(error);
         if(error instanceof NotFoundError)
           alert('This post has already been deleted.');
         else

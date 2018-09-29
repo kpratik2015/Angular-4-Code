@@ -1,12 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+
+import { Observable } from 'rxjs';
+// catch is an instance method available on observable objects
 import 'rxjs/add/operator/catch'; // this will help catch errors at service level
 import { AppError } from '../common/app-error';
 import { NotFoundError } from '../common/not-found-error';
 import { BadInput } from '../common/bad-input';
 
-
+// throw method is static method available on obeservable class
+import 'rxjs/add/observable/throw';
+// import { throwError } from 'rxjs';
+// import { filter, map, catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root' 
 })
@@ -49,8 +54,10 @@ export class PostService {
   deletePost(id) {
     return this.http.delete(this.url+'/'+id)
       .catch((error:Response) => {
-        if (error.status === 404)
-          return Observable.throw(new NotFoundError());
+        if (error.status === 404){
+          // console.log(error.status);
+          return Observable.throw(new NotFoundError()); // static method
+        }
         return Observable.throw(new AppError(error));
       });
   }
