@@ -31,9 +31,7 @@ export class PostsComponentComponent implements OnInit {
           if(error instanceof BadInput) {
             // this.form.setErrors(error.originalError) // show error msg coming from server. 
           }
-          else { 
-            alert('An unexpected error occurred.');
-          }
+          else throw error; // we need to throw so that our global handler handles this error.
         });
   }
 
@@ -45,16 +43,13 @@ export class PostsComponentComponent implements OnInit {
     .subscribe(
       response => {
         console.log(response.json());
-      },
-      error => {
-        alert('An unexpected error occurred.');
       });
       // this.http.put(this.url, JSON.stringify(post)) // e.g. of put.
   }
 
   deletePost(post) {
-    this.service.deletePost(455) // for seeing error.
-    // this.service.deletePost(post.id)
+    // this.service.deletePost(455) // for seeing error.
+    this.service.deletePost(post.id)
     .subscribe(
       response => {
         let index = this.posts.indexOf(post);
@@ -64,8 +59,7 @@ export class PostsComponentComponent implements OnInit {
         console.log(error);
         if(error instanceof NotFoundError)
           alert('This post has already been deleted.');
-        else
-          alert('An unexpected error occurred.');
+        else throw error;
       });
   }
 
@@ -92,10 +86,6 @@ export class PostsComponentComponent implements OnInit {
       response => {
         // console.log(response.json());
         this.posts = response.json();
-      },
-      // error optional parameter
-      error => {
-        alert('An unexpected error occurred.'); // in real world you'll use toast notification
       }); // we are subscribing to observable that means when the result is ready we'll be notified
   }
 

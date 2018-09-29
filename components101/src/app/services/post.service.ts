@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
 import { Observable } from 'rxjs';
+// import { Observable } from 'rxjs/Observable'; // for angular 4
+
 // catch is an instance method available on observable objects
 import 'rxjs/add/operator/catch'; // this will help catch errors at service level
 import { AppError } from '../common/app-error';
@@ -30,6 +32,7 @@ EXPECTED:
 
 export class PostService {
 
+  // private url = 'http://jxfdfxfr.typicode.com/posts'; // to check unexpected error
   private url = 'http://jsonplaceholder.typicode.com/posts'; // we want this visible only in this class
 
   constructor(private http: Http) { }

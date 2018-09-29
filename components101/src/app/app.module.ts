@@ -1,6 +1,6 @@
 import { FavoriteComponent } from './favorite.component';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { MyNewComponentComponent } from './my-new-component/my-new-component.component';
@@ -14,6 +14,7 @@ import { PostsComponentComponent } from './posts-component/posts-component.compo
 // put this in providers then it will give error that there is no provider for Http
 import { HttpModule } from '@angular/http'; 
 import { PostService } from './services/post.service';
+import { AppErrorHandler } from './common/app-error-handler';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,9 @@ import { PostService } from './services/post.service';
     HttpModule
   ],
   providers: [
-    PostService
+    PostService,
+    // we want angular to replace its default errorhandler with our errorhandler. So we pass in object
+    { provide: ErrorHandler, useClass: AppErrorHandler } // telling angular that wherever errorhandler is used, use apperrorhandler instead
   ],
   bootstrap: [AppComponent]
 })
