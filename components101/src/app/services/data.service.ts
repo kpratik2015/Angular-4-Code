@@ -13,6 +13,8 @@ import 'rxjs/add/operator/catch'; // this will help catch errors at service leve
 import 'rxjs/add/observable/throw';
 // import { throwError } from 'rxjs';
 // import { filter, map, catchError } from 'rxjs/operators';
+
+import 'rxjs/add/operator/map';
 @Injectable({
   providedIn: 'root' 
 })
@@ -25,22 +27,28 @@ export class DataService {
 
   getAll() {
     return this.http.get(this.url)
+    .map(response => response.json()) // mapping to an array of JS objects
     .catch(this.handleError);  // it returns observable<Response>
+    // with a map operator we can transform the items in an obervable
+
   }
 
   create(resource) {
     return this.http.post(this.url, JSON.stringify(resource))
+      .map(response => response.json())
       .catch(this.handleError);  // this method also returns observable
   }
   
   update(resource) {
     return this.http
     .patch(this.url+'/'+resource.id, JSON.stringify({ isRead: true }))
+    .map(response => response.json())
     .catch(this.handleError);
   }
 
   delete(id) {
     return this.http.delete(this.url+'/'+id)
+      .map(response => response.json())
       .catch(this.handleError);  // NOTE: it's not being called. We're simple passing a reference
   }
 

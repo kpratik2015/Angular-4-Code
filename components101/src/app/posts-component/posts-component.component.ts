@@ -22,8 +22,8 @@ export class PostsComponentComponent implements OnInit {
     inputTitle.value = '';
     this.service.create(post)
       .subscribe(
-        response => {
-          post['id'] = response.json().id; // post.id gives compilation error. For this we can also do let post: any
+        newPost => {
+          post['id'] = newPost.id; // post.id gives compilation error. For this we can also do let post: any
           this.posts.splice(0,0,post); // adds our post to first position
           // console.log(response.json());
         },
@@ -41,8 +41,8 @@ export class PostsComponentComponent implements OnInit {
     // NOTE: when using patch or put method we need to reference a specific post
     this.service.update(post)
     .subscribe(
-      response => {
-        console.log(response.json());
+      updatedPost => {
+        console.log(updatedPost);
       });
       // this.http.put(this.url, JSON.stringify(post)) // e.g. of put.
   }
@@ -51,7 +51,7 @@ export class PostsComponentComponent implements OnInit {
     // this.service.deletePost(455) // for seeing error.
     this.service.delete(post.id)
     .subscribe(
-      response => {
+      () => { // empty paranthesis because we don't get anything in return
         let index = this.posts.indexOf(post);
         this.posts.splice(index, 1);
       },
@@ -82,11 +82,7 @@ export class PostsComponentComponent implements OnInit {
   ngOnInit() {
     // We use observables to work with asynchronous i.e. non-blocking operations
     this.service.getAll() // this component is now telling the service that hey I want posts. Get the posts somehow. Service will figure it out.
-    .subscribe(
-      response => {
-        // console.log(response.json());
-        this.posts = response.json();
-      }); // we are subscribing to observable that means when the result is ready we'll be notified
+    .subscribe( posts => this.posts = posts ); // we are subscribing to observable that means when the result is ready we'll be notified
   }
 
 }
