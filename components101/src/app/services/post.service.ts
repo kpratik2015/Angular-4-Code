@@ -4,6 +4,19 @@ import { Http } from '@angular/http';
 @Injectable({
   providedIn: 'root'
 })
+
+/*
+Possibilities of Errors:
+UNEXPECTED:
+- server is offline
+- network is down i.e. client cannot reach server
+- unhandled exceptions
+
+EXPECTED:
+- not found errors (404)
+- bad request errors (400)
+*/
+
 export class PostService {
 
   private url = 'http://jsonplaceholder.typicode.com/posts'; // we want this visible only in this class
