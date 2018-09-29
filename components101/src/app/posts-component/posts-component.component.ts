@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Http } from '@angular/http';
+import { PostService } from '../services/post.service';
 
 @Component({
   selector: 'posts-component',
@@ -9,15 +9,15 @@ import { Http } from '@angular/http';
 export class PostsComponentComponent implements OnInit {
 
   posts: any[];
-  private url = 'http://jsonplaceholder.typicode.com/posts'; // we want this visible only in this class
-  constructor(private http: Http) { // decorate with private keyword so it is available to other functions
+  
+  constructor(private service: PostService) { // decorate with private keyword so it is available to other functions
     // LESSON: do not call http services in constructor. Use ngOnInit
   } // we use this http class to get data from backend
 
   createPost(inputTitle : HTMLInputElement) {
     let post = { title: inputTitle.value}
     inputTitle.value = '';
-    this.http.post(this.url, JSON.stringify(post)) // this method also returns observable
+    this.service.createPost(post)
       .subscribe(response => {
         post['id'] = response.json().id; // post.id gives compilation error. For this we can also do let post: any
         this.posts.splice(0,0,post); // adds our post to first position
@@ -29,7 +29,7 @@ export class PostsComponentComponent implements OnInit {
     // we use the patch method to update only few properties in an object.
     // patch is not widely supported. patch can give slight performance benefit
     // NOTE: when using patch or put method we need to reference a specific post
-    this.http.patch(this.url+'/'+post.id, JSON.stringify({ isRead: true }))
+    this.service.updatePost(post)
     .subscribe(response => {
       console.log(response.json());
     });
@@ -37,7 +37,7 @@ export class PostsComponentComponent implements OnInit {
   }
 
   deletePost(post) {
-    this.http.delete(this.url+'/'+post.id)
+    this.service.deletePost(post.id)
     .subscribe(response => {
       let index = this.posts.indexOf(post);
       this.posts.splice(index, 1);
@@ -62,7 +62,7 @@ export class PostsComponentComponent implements OnInit {
   */
   ngOnInit() {
     // We use observables to work with asynchronous i.e. non-blocking operations
-    this.http.get(this.url) // it returns observable<Response>
+    this.service.getPosts() // this component is now telling the service that hey I want posts. Get the posts somehow. Service will figure it out.
     .subscribe(response => {
       // console.log(response.json());
       this.posts = response.json();

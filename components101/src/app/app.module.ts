@@ -13,6 +13,7 @@ import { PostsComponentComponent } from './posts-component/posts-component.compo
 // this is required for http consuming. If you inject in component Http and do not
 // put this in providers then it will give error that there is no provider for Http
 import { HttpModule } from '@angular/http'; 
+import { PostService } from './services/post.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,9 @@ import { HttpModule } from '@angular/http';
     ReactiveFormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [
+    PostService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
