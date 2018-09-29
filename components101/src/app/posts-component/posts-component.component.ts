@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService } from '../services/post.service';
+import { AppError } from '../common/app-error';
+import { NotFoundError } from '../common/not-found-error';
+import { BadInput } from '../common/bad-input';
 
 @Component({
   selector: 'posts-component',
@@ -24,9 +27,9 @@ export class PostsComponentComponent implements OnInit {
           this.posts.splice(0,0,post); // adds our post to first position
           // console.log(response.json());
         },
-        (error: Response) => {
-          if(error.status === 400) {
-            // this.form.setErrors(error.json()) // show error msg coming from server. 
+        (error: AppError) => {
+          if(error instanceof BadInput) {
+            // this.form.setErrors(error.originalError) // show error msg coming from server. 
           }
           else { 
             alert('An unexpected error occurred.');
@@ -56,8 +59,8 @@ export class PostsComponentComponent implements OnInit {
         let index = this.posts.indexOf(post);
         this.posts.splice(index, 1);
       },
-      (error: Response) => { // whenever in arrow notation you want to use type notation then put round brackets.
-        if(error.status === 404)
+      (error: AppError) => { // whenever in arrow notation you want to use type notation then put round brackets.
+        if(error instanceof NotFoundError)
           alert('This post has already been deleted.');
         else
           alert('An unexpected error occurred.');
