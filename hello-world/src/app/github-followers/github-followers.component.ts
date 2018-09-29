@@ -1,6 +1,8 @@
 import { GithubFollowersService } from './../services/github-followers.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/combineLatest'; // static method on Observable class.
 
 @Component({
   selector: 'github-followers',
@@ -17,18 +19,24 @@ export class GithubFollowersComponent implements OnInit {
 
   ngOnInit() {
 
-    this.route.paramMap
-    .subscribe(params => {
+    // SUBSCRIBING TO MULTIPLE OBSERVABLES
+    // Combine the two or more observable into one and then subscribe to this combined observable
 
-    });
-    // let id = this.route.snapshot.paramMap.get('id');
-    
-    this.route.queryParamMap.subscribe(params => {
-      
-    });
-    // let page = this.route.snapshot.queryParamMap.get('page')
+    let obs = Observable.combineLatest([
+      this.route.paramMap,
+      this.route.queryParamMap
+    ])
 
-    this.service.getAll()
+    obs.subscribe( combined => {  // here combine is an array with two observables
+      let id = combined[0].get('id');
+      let page = combined[1].get('page');
+      // this.service.getAll({ id: id, page: page })
+      this.service.getAll()
       .subscribe(followers => this.followers = followers);
+      // now we have a subscribe in another subscribe which is ugly
+      // gotta change that.
+    });
+
+   
   }
 }
