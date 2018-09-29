@@ -18,11 +18,20 @@ export class PostsComponentComponent implements OnInit {
     let post = { title: inputTitle.value}
     inputTitle.value = '';
     this.service.createPost(post)
-      .subscribe(response => {
-        post['id'] = response.json().id; // post.id gives compilation error. For this we can also do let post: any
-        this.posts.splice(0,0,post); // adds our post to first position
-        // console.log(response.json());
-      });
+      .subscribe(
+        response => {
+          post['id'] = response.json().id; // post.id gives compilation error. For this we can also do let post: any
+          this.posts.splice(0,0,post); // adds our post to first position
+          // console.log(response.json());
+        },
+        (error: Response) => {
+          if(error.status === 400) {
+            // this.form.setErrors(error.json()) // show error msg coming from server. 
+          }
+          else { 
+            alert('An unexpected error occurred.');
+          }
+        });
   }
 
   updatePost(post) {
@@ -30,18 +39,29 @@ export class PostsComponentComponent implements OnInit {
     // patch is not widely supported. patch can give slight performance benefit
     // NOTE: when using patch or put method we need to reference a specific post
     this.service.updatePost(post)
-    .subscribe(response => {
-      console.log(response.json());
-    });
-    // this.http.put(this.url, JSON.stringify(post)) // e.g. of put.
+    .subscribe(
+      response => {
+        console.log(response.json());
+      },
+      error => {
+        alert('An unexpected error occurred.');
+      });
+      // this.http.put(this.url, JSON.stringify(post)) // e.g. of put.
   }
 
   deletePost(post) {
     this.service.deletePost(post.id)
-    .subscribe(response => {
-      let index = this.posts.indexOf(post);
-      this.posts.splice(index, 1);
-    });
+    .subscribe(
+      response => {
+        let index = this.posts.indexOf(post);
+        this.posts.splice(index, 1);
+      },
+      (error: Response) => { // whenever in arrow notation you want to use type notation then put round brackets.
+        if(error.status === 404)
+          alert('This post has already been deleted.');
+        else
+          alert('An unexpected error occurred.');
+      });
   }
 
   /*
@@ -63,10 +83,15 @@ export class PostsComponentComponent implements OnInit {
   ngOnInit() {
     // We use observables to work with asynchronous i.e. non-blocking operations
     this.service.getPosts() // this component is now telling the service that hey I want posts. Get the posts somehow. Service will figure it out.
-    .subscribe(response => {
-      // console.log(response.json());
-      this.posts = response.json();
-    }); // we are subscribing to observable that means when the result is ready we'll be notified
+    .subscribe(
+      response => {
+        // console.log(response.json());
+        this.posts = response.json();
+      },
+      // error optional parameter
+      error => {
+        alert('An unexpected error occurred.'); // in real world you'll use toast notification
+      }); // we are subscribing to observable that means when the result is ready we'll be notified
   }
 
 }
